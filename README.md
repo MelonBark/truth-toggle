@@ -7,6 +7,8 @@ Clicking the extension button in the browser toolbar toggles between the selecte
 
 Grokipedia serves as the default primary source for redirections.
 
+Developed by [Melon Bark, LLC](https://MelonBark.com).
+
 # Installation
 
 The extension is available for Chrome, Firefox, and Microsoft Edge.

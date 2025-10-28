@@ -11,8 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/MelonBark/truth-toggle.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Melon Bark, LLC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/MelonBark/truth-toggle/issues"
   },
