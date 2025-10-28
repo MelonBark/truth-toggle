@@ -3,9 +3,9 @@
 
   "name": "Truth Toggle",
   "description": "This extension redirects Wikipedia to Grokipedia (with Infogalactic fallback) and allows toggling between sources.",
-  "icons": { "16": "./images/IW-16.png",
-           "48": "./images/IW-48.png",
-          "128": "./images/IW-128.png" },
+  "icons": { "16": "../images/truth-toggle-16.png",
+           "48": "../images/truth-toggle-48.png",
+          "128": "../images/truth-toggle-128.png" },
   "version": "1.6",
   "background": {
     "service_worker": "../background.js"
