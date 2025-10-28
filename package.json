@@ -2,8 +2,9 @@
   "name": "truth-toggle",
   "version": "1.0.0",
   "description": "Browser extension to redirect Wikipedia to Grokipedia with Infogalactic fallback",
-  "main": "background.js",
+  "main": "extension/service_worker.js",
   "scripts": {
+    "build": "if (!(Test-Path dist)) { New-Item -ItemType Directory -Path dist } ; Compress-Archive -Path extension/* -DestinationPath dist/truth-toggle.zip -Force",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

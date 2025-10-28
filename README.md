@@ -23,11 +23,9 @@ The extension is available for Chrome, Firefox, and Microsoft Edge.
 
 ## Development
 
-The extension uses Manifest V3 for modern browser compatibility. Separate folders contain browser-specific manifests while sharing common code.
+The extension uses Manifest V3 for modern browser compatibility across Chrome, Firefox, and Microsoft Edge. All browser-specific code is consolidated in the `extension/` folder.
 
-- `Chrome/`: Chrome-specific files
-- `Firefox/`: Firefox-specific files
-- `Edge/`: Microsoft Edge-specific files
+- `extension/`: Shared extension files including manifest.json, service_worker.js, and images
 
 ## The Future
 
