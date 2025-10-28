@@ -1,21 +1,21 @@
 {
-  "name": "infogalactic-transporter",
+  "name": "truth-toggle",
   "version": "1.0.0",
-  "description": "",
+  "description": "Browser extension to redirect Wikipedia to Grokipedia with Infogalactic fallback",
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rorybot/infogalactic-transporter.git"
+    "url": "git+https://github.com/MelonBark/truth-toggle.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rorybot/infogalactic-transporter/issues"
+    "url": "https://github.com/MelonBark/truth-toggle/issues"
   },
-  "homepage": "https://github.com/rorybot/infogalactic-transporter#readme",
+  "homepage": "https://github.com/MelonBark/truth-toggle#readme",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",

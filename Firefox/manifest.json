@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Infogalactic Transporter",
-  "description": "This extension allows the user to move between Wiki and IG.",
+  "name": "Truth Toggle",
+  "description": "This extension redirects Wikipedia to Grokipedia (with Infogalactic fallback) and allows toggling between sources.",
   "icons": {
            "48": "./images/IW-48.png",
           "128": "./images/IW-128.png" },

@@ -1,4 +1,5 @@
 var wikiIdentifier = 'wikipedia.org/wiki'
+var grokiIdentifier = 'grokipedia.com'
 var igIdentifier = 'infogalactic.com/info'
 var redirectedArray = {}
 
@@ -16,8 +17,13 @@ chrome.browserAction.onClicked.addListener(
         redirectedArray[activeTab.id] = 'disallowRedirect'
 
         if (currentURL.includes(wikiIdentifier)) {
-          var igURL = replace_url(currentURL, wikiIdentifier, igIdentifier)
-          return chrome.tabs.update({'url': igURL})
+          var grokiURL = replace_url(currentURL, wikiIdentifier, grokiIdentifier)
+          return chrome.tabs.update({'url': grokiURL})
+        }
+
+        if (currentURL.includes(grokiIdentifier)) {
+          var wikiURL = currentURL.replace(grokiIdentifier, wikiIdentifier)
+          return chrome.tabs.update({'url': wikiURL})
         }
 
         if (currentURL.includes(igIdentifier)) {
@@ -35,7 +41,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     }
     if (redirectedArray[details.tabId] === 'allowRedirect') {
       return {
-        redirectUrl: replace_url(details.url, wikiIdentifier, igIdentifier)
+        redirectUrl: replace_url(details.url, wikiIdentifier, grokiIdentifier)
       }
     }
   },
@@ -46,7 +52,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 chrome.tabs.onUpdated.addListener(
   function (tabid, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
-      if (!tab.url.includes(wikiIdentifier) && !tab.url.includes(igIdentifier)) {
+      if (!tab.url.includes(wikiIdentifier) && !tab.url.includes(grokiIdentifier) && !tab.url.includes(igIdentifier)) {
         redirectedArray[tabid] = 'allowRedirect'
       }
     }
