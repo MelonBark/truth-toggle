@@ -4,12 +4,12 @@ var igIdentifier = 'infogalactic.com/info'
 var redirectedArray = {}
 
 function replace_url (url, wikipedia_fragment, infogalactic_fragment) {
-  return url.replace(new RegExp('https:\/\/(|en\.|www\.)' + wikipedia_fragment), 'https://' + infogalactic_fragment)
+  return url.replace(new RegExp('https:\\/\\/(|en\\.|www\\.)' + wikipedia_fragment), 'https://' + infogalactic_fragment)
 };
 
-browser.browserAction.onClicked.addListener(
+chrome.action.onClicked.addListener(
   function (tab) {
-    browser.tabs.query(
+    chrome.tabs.query(
       {active: true, currentWindow: true},
       function (tabs) {
         var activeTab = tabs[0]
@@ -18,23 +18,23 @@ browser.browserAction.onClicked.addListener(
 
         if (currentURL.includes(wikiIdentifier)) {
           var grokiURL = replace_url(currentURL, wikiIdentifier, grokiIdentifier)
-          return browser.tabs.update({'url': grokiURL})
+          return chrome.tabs.update({'url': grokiURL})
         }
 
         if (currentURL.includes(grokiIdentifier)) {
           var wikiURL = currentURL.replace(grokiIdentifier, wikiIdentifier)
-          return browser.tabs.update({'url': wikiURL})
+          return chrome.tabs.update({'url': wikiURL})
         }
 
         if (currentURL.includes(igIdentifier)) {
           var wikiURL = currentURL.replace(igIdentifier, wikiIdentifier)
-          return browser.tabs.update({'url': wikiURL})
+          return chrome.tabs.update({'url': wikiURL})
         }
       })
   }
 )
 
-browser.webRequest.onBeforeRequest.addListener(
+chrome.webRequest.onBeforeRequest.addListener(
   function (details) {
     if (!(details.tabId in redirectedArray)) {
       redirectedArray[details.tabId] = 'allowRedirect'
@@ -49,7 +49,7 @@ browser.webRequest.onBeforeRequest.addListener(
   ['blocking']
 )
 
-browser.tabs.onUpdated.addListener(
+chrome.tabs.onUpdated.addListener(
   function (tabid, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
       if (!tab.url.includes(wikiIdentifier) && !tab.url.includes(grokiIdentifier) && !tab.url.includes(igIdentifier)) {

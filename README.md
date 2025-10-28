@@ -9,19 +9,25 @@ Grokipedia serves as the default primary source for redirections.
 
 # Installation
 
-Simply go to the Chrome webstore:
-[Link to be added]
+The extension is available for Chrome, Firefox, and Microsoft Edge.
 
-or the Firefox add-ons site:
-[Link to be added]
-
-And install!
+- **Chrome**: Install from the [Chrome Web Store](link-to-be-added)
+- **Firefox**: Install from [Firefox Add-ons](link-to-be-added)
+- **Edge**: Install from the [Microsoft Edge Add-ons](link-to-be-added)
 
 ## Behaviour
 
 - Tab-limited: whatever you do with it in one tab won't affect another. If you press the button (thus disabling the auto-redirect behaviour), and have any other tabs open (or open a new tab), those other tabs will still behave in their default, auto-redirecting way
 
 - Encyclopedia session-limited: your choice is forgotten when you leave. If you click the button (thus disabling the auto-redirect behaviour), and then navigate off to other sites, the auto-redirect behaviour will be reset.
+
+## Development
+
+The extension uses Manifest V3 for modern browser compatibility. Separate folders contain browser-specific manifests while sharing common code.
+
+- `Chrome/`: Chrome-specific files
+- `Firefox/`: Firefox-specific files
+- `Edge/`: Microsoft Edge-specific files
 
 ## The Future
 
