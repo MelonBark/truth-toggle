@@ -1,5 +1,5 @@
 var wikiIdentifier = 'wikipedia.org/wiki'
-var grokiIdentifier = 'grokipedia.com'
+var grokiIdentifier = 'grokipedia.com/page'
 var igIdentifier = 'infogalactic.com/info'
 var redirectedArray = {}
 
@@ -22,8 +22,8 @@ chrome.action.onClicked.addListener(
         }
 
         if (currentURL.includes(grokiIdentifier)) {
-          var wikiURL = currentURL.replace(grokiIdentifier, wikiIdentifier)
-          return chrome.tabs.update({'url': wikiURL})
+          var igURL = currentURL.replace(grokiIdentifier, igIdentifier)
+          return chrome.tabs.update({'url': igURL})
         }
 
         if (currentURL.includes(igIdentifier)) {
@@ -34,27 +34,22 @@ chrome.action.onClicked.addListener(
   }
 )
 
-chrome.webRequest.onBeforeRequest.addListener(
-  function (details) {
-    if (!(details.tabId in redirectedArray)) {
-      redirectedArray[details.tabId] = 'allowRedirect'
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  if (changeInfo.url && changeInfo.url.includes(wikiIdentifier)) {
+    if (!(tabId in redirectedArray)) {
+      redirectedArray[tabId] = 'allowRedirect';
     }
-    if (redirectedArray[details.tabId] === 'allowRedirect') {
-      return {
-        redirectUrl: replace_url(details.url, wikiIdentifier, grokiIdentifier)
-      }
+    if (redirectedArray[tabId] === 'allowRedirect') {
+      var grokiURL = replace_url(changeInfo.url, wikiIdentifier, grokiIdentifier);
+      chrome.tabs.update(tabId, {url: grokiURL});
     }
-  },
-  {urls: ['*://*.wikipedia.org/*'], types: ['main_frame', 'sub_frame', 'stylesheet', 'script', 'image', 'object', 'xmlhttprequest', 'other']},
-  ['blocking']
-)
-
-chrome.tabs.onUpdated.addListener(
-  function (tabid, changeInfo, tab) {
-    if (changeInfo.status === 'complete') {
-      if (!tab.url.includes(wikiIdentifier) && !tab.url.includes(grokiIdentifier) && !tab.url.includes(igIdentifier)) {
-        redirectedArray[tabid] = 'allowRedirect'
-      }
+  } else if (changeInfo.status === 'complete') {
+    if (!tab.url.includes(wikiIdentifier) && !tab.url.includes(grokiIdentifier) && !tab.url.includes(igIdentifier)) {
+      redirectedArray[tabId] = 'allowRedirect';
     }
   }
-)
+});
+
+chrome.tabs.onRemoved.addListener(function(tabId) {
+  delete redirectedArray[tabId];
+});
