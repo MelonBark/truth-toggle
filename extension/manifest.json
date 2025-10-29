@@ -14,7 +14,7 @@
   },
 
   "action": {
-    "default_title": "Get me outta here!"
+    "default_title": "Truth Toggle"
   },
   "permissions": [
     "activeTab",
