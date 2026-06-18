@@ -40,6 +40,37 @@ Truth Toggle requests only the permissions required for its single purpose. No c
 
 **Justification:** Truth Toggle must recognize Grokipedia article URLs so the toolbar button can switch the current tab back to Wikipedia, and so the extension can navigate tabs to the matching Grokipedia page. This host permission limits the extension to the Grokipedia domain it uses for redirects; the extension does not inject scripts into or fetch content from Grokipedia.
 
+## Store listing — notes for certification
+
+Paste into **Submission Options → Notes for certification** in Partner Center ([guidance](https://learn.microsoft.com/en-us/microsoft-edge/extensions/publish/publish-extension#step-8-enter-certification-testing-notes-and-submit-the-extension)):
+
+> **Test accounts:** None required. Truth Toggle does not use sign-in, subscriptions, or backend services.
+>
+> **How to test — auto-redirect (default behavior):**
+> 1. Install the extension and open a new tab.
+> 2. Navigate to a Wikipedia article, for example: `https://en.wikipedia.org/wiki/Ohio`
+> 3. Expected: the tab automatically redirects to the matching Grokipedia URL (`https://grokipedia.com/page/Ohio`).
+>
+> **How to test — toolbar toggle:**
+> 1. On a Wikipedia article tab, click the Truth Toggle toolbar icon once.
+> 2. Expected: the tab navigates to the matching Grokipedia page and auto-redirect is disabled for that tab only.
+> 3. Click the toolbar icon again while on Grokipedia.
+> 4. Expected: the tab navigates back to the matching Wikipedia article (`https://wikipedia.org/wiki/...`).
+>
+> **Per-tab behavior:** Disabling auto-redirect via the toolbar button affects only the active tab. Other tabs continue to auto-redirect Wikipedia to Grokipedia until the button is used in those tabs.
+>
+> **Session reset:** If the user navigates away from Wikipedia/Grokipedia to another site and later returns to a Wikipedia article in the same tab, auto-redirect is re-enabled for that tab.
+>
+> **Version 1.7 changes:** Infogalactic support was removed. The extension now toggles only between Wikipedia and Grokipedia.
+>
+> **Technical notes for reviewers:**
+> - Manifest V3 service worker only; no content scripts, no remote code, no network requests, no storage APIs.
+> - Permissions: `tabs` plus host access to `wikipedia.org` and `grokipedia.com` only.
+> - The extension rewrites tab URLs; it does not read or modify page content.
+> - No user data is collected, stored, or transmitted.
+>
+> **Dependencies:** Requires live access to `wikipedia.org` and `grokipedia.com` during testing.
+
 # Installation
 
 The extension is available for Chrome, Firefox, and Microsoft Edge.
