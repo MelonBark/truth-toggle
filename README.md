@@ -15,6 +15,31 @@ Per [Microsoft Edge extension policy 1.1.1](https://learn.microsoft.com/en-us/le
 
 > **Truth Toggle automatically redirects Wikipedia article pages to the matching Grokipedia page. Clicking the toolbar button turns off auto-redirect for the current tab and lets you switch between Wikipedia and Grokipedia. The extension only accesses Wikipedia and Grokipedia URLs to perform these redirects; it does not collect, store, or transmit user data.**
 
+## Store listing — permission justifications
+
+Truth Toggle requests only the permissions required for its single purpose. No content scripts, network requests, storage APIs, or broad host access are used.
+
+### `tabs`
+
+**Justification:** The `tabs` permission is required to redirect encyclopedia pages and to keep redirect behavior scoped per tab.
+
+- **`chrome.tabs.onUpdated`** — Detects when the user navigates to a Wikipedia article so the extension can automatically redirect that tab to the matching Grokipedia URL.
+- **`chrome.tabs.update`** — Navigates the current tab between Wikipedia and Grokipedia for both automatic redirects and toolbar-button toggles.
+- **`chrome.action.onClicked`** — Reads the active tab’s URL and ID when the user clicks the toolbar button to disable auto-redirect and switch sources.
+- **`chrome.tabs.onRemoved`** — Removes per-tab redirect state when a tab is closed.
+
+`activeTab` alone is insufficient because auto-redirect runs on navigation without a user gesture.
+
+### Host permissions
+
+#### `*://*.wikipedia.org/*`
+
+**Justification:** Truth Toggle must recognize Wikipedia article URLs in tab navigation events and redirect them to the equivalent Grokipedia page. This host permission limits the extension to the Wikipedia domain it supports and is used only to match and rewrite those article URLs; the extension does not inject scripts into or fetch content from Wikipedia.
+
+#### `*://*.grokipedia.com/*`
+
+**Justification:** Truth Toggle must recognize Grokipedia article URLs so the toolbar button can switch the current tab back to Wikipedia, and so the extension can navigate tabs to the matching Grokipedia page. This host permission limits the extension to the Grokipedia domain it uses for redirects; the extension does not inject scripts into or fetch content from Grokipedia.
+
 # Installation
 
 The extension is available for Chrome, Firefox, and Microsoft Edge.
