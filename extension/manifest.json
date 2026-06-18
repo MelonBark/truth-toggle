@@ -2,13 +2,13 @@
   "manifest_version": 3,
 
   "name": "Truth Toggle",
-  "description": "Redirects Wikipedia to Grokipedia with Infogalactic fallback. Toggle between sources. By Melon Bark, LLC.",
+  "description": "Redirects Wikipedia to Grokipedia. Toggle between sources. By Melon Bark, LLC.",
   "homepage_url": "https://MelonBark.com",
   "author": "Melon Bark, LLC",
   "icons": { "16": "images/truth-toggle-16.png",
            "48": "images/truth-toggle-48.png",
           "128": "images/truth-toggle-128.png" },
-  "version": "1.6",
+  "version": "1.7",
   "background": {
     "service_worker": "service_worker.js"
   },
@@ -21,7 +21,6 @@
   ],
   "host_permissions": [
     "*://*.wikipedia.org/*",
-    "*://*.grokipedia.com/*",
-    "*://*.infogalactic.com/*"
+    "*://*.grokipedia.com/*"
   ]
 }
