@@ -9,6 +9,12 @@ Grokipedia serves as the default primary source for redirections.
 
 Developed by [Melon Bark, LLC](https://MelonBark.com).
 
+## Store listing — single purpose
+
+Per [Microsoft Edge extension policy 1.1.1](https://learn.microsoft.com/en-us/legal/microsoft-edge/extensions/developer-policies#111-extensions-must-have-a-single-purpose), Truth Toggle has one narrow purpose:
+
+> **Truth Toggle automatically redirects Wikipedia article pages to the matching Grokipedia page. Clicking the toolbar button turns off auto-redirect for the current tab and lets you switch between Wikipedia and Grokipedia. The extension only accesses Wikipedia and Grokipedia URLs to perform these redirects; it does not collect, store, or transmit user data.**
+
 # Installation
 
 The extension is available for Chrome, Firefox, and Microsoft Edge.
