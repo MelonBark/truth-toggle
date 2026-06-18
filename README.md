@@ -13,9 +13,9 @@ Developed by [Melon Bark, LLC](https://MelonBark.com).
 
 The extension is available for Chrome, Firefox, and Microsoft Edge.
 
-- **Chrome**: Install from the [Chrome Web Store](link-to-be-added)
+- **Chrome**: Install from the [Chrome Web Store](https://chrome.google.com/webstore/devconsole/901a5c38-94d1-470f-8fe6-f30a8c20616c)
 - **Firefox**: Install from [Firefox Add-ons](link-to-be-added)
-- **Edge**: Install from the [Microsoft Edge Add-ons](link-to-be-added)
+- **Edge**: Install from the [Microsoft Edge Add-ons](https://partner.microsoft.com/en-us/dashboard/microsoftedge/overview)
 
 ## Behaviour
 
