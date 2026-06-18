@@ -1,9 +1,9 @@
 
 # Truth Toggle
 
-This browser extension enhances Wikipedia browsing by redirecting to alternative sources. Instead of loading Wikipedia pages directly, it first attempts to load the corresponding page from https://grokipedia.com/. If the Grokipedia page is not found, it falls back to Infogalactic.
+This browser extension enhances Wikipedia browsing by redirecting to Grokipedia. Instead of loading Wikipedia pages directly, it loads the corresponding page from https://grokipedia.com/.
 
-Clicking the extension button in the browser toolbar toggles between the selected sources, allowing you to switch back to Wikipedia or cycle through alternatives as desired.
+Clicking the extension button in the browser toolbar toggles between Grokipedia and Wikipedia, allowing you to switch sources as desired.
 
 Grokipedia serves as the default primary source for redirections.
 
@@ -13,9 +13,9 @@ Developed by [Melon Bark, LLC](https://MelonBark.com).
 
 The extension is available for Chrome, Firefox, and Microsoft Edge.
 
-- **Chrome**: Install from the [Chrome Web Store](link-to-be-added)
+- **Chrome**: Install from the [Chrome Web Store](https://chrome.google.com/webstore/devconsole/901a5c38-94d1-470f-8fe6-f30a8c20616c)
 - **Firefox**: Install from [Firefox Add-ons](link-to-be-added)
-- **Edge**: Install from the [Microsoft Edge Add-ons](link-to-be-added)
+- **Edge**: Install from the [Microsoft Edge Add-ons](https://partner.microsoft.com/en-us/dashboard/microsoftedge/overview)
 
 ## Behaviour
 

@@ -1,60 +1,81 @@
-var wikiIdentifier = 'wikipedia.org/wiki'
-var grokiIdentifier = 'grokipedia.com/page'
-var igIdentifier = 'infogalactic.com/info'
-var redirectedArray = {}
+var WIKIPEDIA_PATH = 'wikipedia.org/wiki';
+var GROKIPEDIA_PATH = 'grokipedia.com/page';
+var WIKIPEDIA_URL_PATTERN = /^https:\/\/(?:en\.|www\.)?wikipedia\.org\/wiki\//;
+
+var tabRedirectState = {};
+
+var REDIRECT_ALLOW = 'allowRedirect';
+var REDIRECT_DISALLOW = 'disallowRedirect';
 
 function isWikipedia(url) {
-  return /^https:\/\/(?:en\.|www\.)?wikipedia\.org\/wiki\//.test(url);
+  return WIKIPEDIA_URL_PATTERN.test(url);
 }
 
 function isGrokipedia(url) {
-  return url.includes('grokipedia.com/page');
+  return url.indexOf(GROKIPEDIA_PATH) !== -1;
 }
 
-function isInfogalactic(url) {
-  return url.includes('infogalactic.com/info');
+function isEncyclopediaUrl(url) {
+  return isWikipedia(url) || isGrokipedia(url);
 }
 
-function replace_url (url, wikipedia_fragment, infogalactic_fragment) {
-  return url.replace(new RegExp('https:\\/\\/(|en\\.|www\\.)' + wikipedia_fragment), 'https://' + infogalactic_fragment)
-};
+function toGrokipediaUrl(url) {
+  return url.replace(WIKIPEDIA_URL_PATTERN, 'https://' + GROKIPEDIA_PATH + '/');
+}
+
+function toWikipediaUrl(url) {
+  return url.replace(GROKIPEDIA_PATH, WIKIPEDIA_PATH);
+}
+
+function setRedirectState(tabId, state) {
+  tabRedirectState[tabId] = state;
+}
+
+function clearRedirectState(tabId) {
+  delete tabRedirectState[tabId];
+}
+
+function shouldAutoRedirect(tabId) {
+  return tabRedirectState[tabId] !== REDIRECT_DISALLOW;
+}
 
 chrome.action.onClicked.addListener(function(tab) {
-  var currentURL = tab.url
-  redirectedArray[tab.id] = 'disallowRedirect'
+  var currentUrl = tab.url;
 
-  if (isWikipedia(currentURL)) {
-    var grokiURL = replace_url(currentURL, wikiIdentifier, grokiIdentifier)
-    chrome.tabs.update(tab.id, {url: grokiURL})
+  if (!currentUrl) {
+    return;
   }
 
-  if (isGrokipedia(currentURL)) {
-    var igURL = currentURL.replace(grokiIdentifier, igIdentifier)
-    chrome.tabs.update(tab.id, {url: igURL})
+  setRedirectState(tab.id, REDIRECT_DISALLOW);
+
+  if (isWikipedia(currentUrl)) {
+    chrome.tabs.update(tab.id, { url: toGrokipediaUrl(currentUrl) });
+    return;
   }
 
-  if (isInfogalactic(currentURL)) {
-    var wikiURL = currentURL.replace(igIdentifier, wikiIdentifier)
-    chrome.tabs.update(tab.id, {url: wikiURL})
+  if (isGrokipedia(currentUrl)) {
+    chrome.tabs.update(tab.id, { url: toWikipediaUrl(currentUrl) });
   }
-})
+});
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   if (changeInfo.url && isWikipedia(changeInfo.url)) {
-    if (!(tabId in redirectedArray)) {
-      redirectedArray[tabId] = 'allowRedirect';
+    if (!(tabId in tabRedirectState)) {
+      setRedirectState(tabId, REDIRECT_ALLOW);
     }
-    if (redirectedArray[tabId] === 'allowRedirect') {
-      var grokiURL = replace_url(changeInfo.url, wikiIdentifier, grokiIdentifier);
-      chrome.tabs.update(tabId, {url: grokiURL});
+
+    if (shouldAutoRedirect(tabId)) {
+      chrome.tabs.update(tabId, { url: toGrokipediaUrl(changeInfo.url) });
     }
-  } else if (changeInfo.status === 'complete') {
-    if (!isWikipedia(tab.url) && !isGrokipedia(tab.url) && !isInfogalactic(tab.url)) {
-      redirectedArray[tabId] = 'allowRedirect';
-    }
+
+    return;
+  }
+
+  if (changeInfo.status === 'complete' && tab.url && !isEncyclopediaUrl(tab.url)) {
+    setRedirectState(tabId, REDIRECT_ALLOW);
   }
 });
 
 chrome.tabs.onRemoved.addListener(function(tabId) {
-  delete redirectedArray[tabId];
+  clearRedirectState(tabId);
 });
